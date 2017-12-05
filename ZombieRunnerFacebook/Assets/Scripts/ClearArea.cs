@@ -20,7 +20,7 @@ public class ClearArea : MonoBehaviour
 
         if(m_timeSinceLastTrigger > 1.2f)
         {
-            Debug.Log("Found Clear Area");
+            SendMessageUpwards("OnFindClearArea");
         }
 	}
 

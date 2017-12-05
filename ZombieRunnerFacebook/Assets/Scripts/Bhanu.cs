@@ -26,6 +26,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] float m_gravityMultiplier , m_jumpSpeed , m_runSpeed , m_stepInterval , m_stickToGroundForce , m_walkSpeed;
         [SerializeField] [Range(0f , 1f)] float m_runstepLenghten;
         [SerializeField] FOVKick m_fovKick = new FOVKick();
+        [SerializeField] Helicopter m_helicopter;
         [SerializeField] LerpControlledBob m_jumpBob = new LerpControlledBob();
         [SerializeField] MouseLook m_mouseLook;
 
@@ -157,6 +158,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
 
             body.AddForceAtPosition(m_characterController.velocity*0.1f, hit.point, ForceMode.Impulse);
+        }
+
+        void OnFindClearArea()
+        {
+            Debug.Log("Found Clear Area");
+            m_helicopter.Call();
         }
 
         void PlayFootStepAudio()
