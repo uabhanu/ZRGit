@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class ClearArea : MonoBehaviour 
 {
+    bool m_foundClearArea = false;
+
     [SerializeField] float m_timeSinceLastTrigger = 0f;
-
-	void Start() 
-    {
-		
-	}
-
+   
 	void Update() 
     {
 		if(Time.timeScale == 0)
@@ -18,14 +15,18 @@ public class ClearArea : MonoBehaviour
 
         m_timeSinceLastTrigger += Time.deltaTime;
 
-        if(m_timeSinceLastTrigger > 1.2f)
+        if(m_timeSinceLastTrigger > 1.2f && !m_foundClearArea)
         {
             SendMessageUpwards("OnFindClearArea");
+            m_foundClearArea = true;
         }
 	}
 
-    void OnTriggerStay()
+    void OnTriggerStay(Collider tri)
     {
-        m_timeSinceLastTrigger = 0f;
+        if(!tri.tag.Equals("Player"))
+        {
+            m_timeSinceLastTrigger = 0f;   
+        }
     }
 }

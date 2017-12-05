@@ -10,7 +10,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [RequireComponent(typeof (AudioSource))]
     public class Bhanu : MonoBehaviour
     {
-        AudioSource m_AudioSource;
+        AudioSource m_audioSource;
         bool m_Jump , m_jumping , m_previouslyGrounded;
         Camera m_Camera;
         CharacterController m_characterController;
@@ -20,18 +20,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
         Vector3 m_MoveDir = Vector3.zero , m_originalCameraPosition;
 
         [SerializeField] AudioClip[] m_footstepSounds;    // an array of footstep sounds that will be randomly selected from.
-        [SerializeField] AudioClip m_jumpSound , m_landSound; // m_jumpSound - the sound played when character leaves the ground & m_landSound - the sound played when character touches back on ground.
+        [SerializeField] AudioClip m_jump , m_land; // m_jumpSound - the sound played when character leaves the ground & m_landSound - the sound played when character touches back on ground.
         [SerializeField] bool m_isWalking , m_useFovKick , m_useHeadBob;
         [SerializeField] CurveControlledBob m_headBob = new CurveControlledBob();
         [SerializeField] float m_gravityMultiplier , m_jumpSpeed , m_runSpeed , m_stepInterval , m_stickToGroundForce , m_walkSpeed;
         [SerializeField] [Range(0f , 1f)] float m_runstepLenghten;
         [SerializeField] FOVKick m_fovKick = new FOVKick();
-        [SerializeField] Helicopter m_helicopter;
         [SerializeField] LerpControlledBob m_jumpBob = new LerpControlledBob();
         [SerializeField] MouseLook m_mouseLook;
 
         void Start()
         {
+            m_audioSource = GetComponent<AudioSource>();
             m_characterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
             m_originalCameraPosition = m_Camera.transform.localPosition;
@@ -40,7 +40,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_stepCycle = 0f;
             m_nextStep = m_stepCycle/2f;
             m_jumping = false;
-            m_AudioSource = GetComponent<AudioSource>();
             m_mouseLook.Init(transform , m_Camera.transform);
         }
 
@@ -67,6 +66,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
 
             m_previouslyGrounded = m_characterController.isGrounded;
+        }
+
+        void DropFlare()
+        {
+            
         }
 
         void FixedUpdate()
@@ -160,10 +164,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             body.AddForceAtPosition(m_characterController.velocity*0.1f, hit.point, ForceMode.Impulse);
         }
 
-        void OnFindClearArea()
+        void OnFindClearArea() 
         {
-            Debug.Log("Found Clear Area");
-            m_helicopter.Call();
+            Invoke("DropFlare" , 3.2f);
         }
 
         void PlayFootStepAudio()
@@ -175,23 +178,23 @@ namespace UnityStandardAssets.Characters.FirstPerson
             // pick & play a random footstep sound from the array,
             // excluding sound at index 0
             int n = Random.Range(1, m_footstepSounds.Length);
-            m_AudioSource.clip = m_footstepSounds[n];
-            m_AudioSource.PlayOneShot(m_AudioSource.clip);
+            m_audioSource.clip = m_footstepSounds[n];
+            m_audioSource.PlayOneShot(m_audioSource.clip);
             // move picked sound to index 0 so it's not picked next time
             m_footstepSounds[n] = m_footstepSounds[0];
-            m_footstepSounds[0] = m_AudioSource.clip;
+            m_footstepSounds[0] = m_audioSource.clip;
         }
 
         void PlayJumpSound()
         {
-            m_AudioSource.clip = m_jumpSound;
-            m_AudioSource.Play();
+            m_audioSource.clip = m_jump;
+            m_audioSource.Play();
         }
       
         void PlayLandingSound()
         {
-            m_AudioSource.clip = m_landSound;
-            m_AudioSource.Play();
+            m_audioSource.clip = m_land;
+            m_audioSource.Play();
             m_nextStep = m_stepCycle + .5f;
         }
 
