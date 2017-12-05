@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 65463980524473666}
   - component: {fileID: 114469872879399992}
   m_Layer: 0
-  m_Name: Clear Area
+  m_Name: ClearArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,8 +197,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 40, y: 1, z: 40}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 40, y: 40, z: 40}
+  m_Center: {x: 0, y: 21, z: 0}
 --- !u!81 &81214232300836330
 AudioListener:
   m_ObjectHideFlags: 1
@@ -446,6 +446,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+  m_landingAreaPrefab: {fileID: 1655632683330094, guid: 1f50939e9305aa44f802654ca0881a99,
+    type: 2}
   m_jumpBob:
     BobDuration: 0
     BobAmount: 0

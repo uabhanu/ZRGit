@@ -26,6 +26,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] float m_gravityMultiplier , m_jumpSpeed , m_runSpeed , m_stepInterval , m_stickToGroundForce , m_walkSpeed;
         [SerializeField] [Range(0f , 1f)] float m_runstepLenghten;
         [SerializeField] FOVKick m_fovKick = new FOVKick();
+        [SerializeField] GameObject m_landingAreaPrefab;
         [SerializeField] LerpControlledBob m_jumpBob = new LerpControlledBob();
         [SerializeField] MouseLook m_mouseLook;
 
@@ -70,7 +71,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         void DropFlare()
         {
-            
+            Instantiate(m_landingAreaPrefab , transform.position , transform.rotation);
         }
 
         void FixedUpdate()
